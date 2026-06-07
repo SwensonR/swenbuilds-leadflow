@@ -1,0 +1,94 @@
+[
+  {
+    "id": "b2fa4cce-79fb-47ee-871d-6afc8bba1a2c",
+    "patientName": "Ryan Swenson",
+    "service": "consultation",
+    "appointmentDate": "2026-06-09",
+    "appointmentTime": "11:00",
+    "email": "demo@example.com",
+    "notes": "Appointment Request\n\nHi, my name is Ryan and Id like to schedule an appointment on Tuesday at 11am\n",
+    "status": "Confirmed",
+    "createdAt": "2026-06-07T15:55:33.401Z",
+    "emailHistory": [
+      {
+        "direction": "inbound",
+        "body": "Appointment Request\n\nHi, my name is Ryan and Id like to schedule an appointment on Tuesday at 11am\n",
+        "timestamp": "2026-06-07T15:55:33.401Z"
+      },
+      {
+        "direction": "outbound",
+        "body": "Hi Ryan,\n\nThank you for reaching out to us! We’d be happy to help you schedule your appointment for Tuesday at 11am. Could you please provide your full first and last name, as well as the reason for your visit? \n\nLooking forward to hearing from you!\n\nBest,  \nThe Scheduling Team",
+        "timestamp": "2026-06-07T15:55:34.886Z"
+      },
+      {
+        "direction": "inbound",
+        "body": "hi my last name is Swenson and id like to do a consultation",
+        "timestamp": "2026-06-07T15:56:27.005Z"
+      },
+      {
+        "direction": "outbound",
+        "body": "Hello Ms. Swenson,\n\nThank you for reaching out to us! We’d be happy to assist you with scheduling your consultation. Could you please provide your full first name? Once we have that, we can get you booked.\n\nLooking forward to hearing from you!\n\nBest,  \nThe Scheduling Team",
+        "timestamp": "2026-06-07T15:56:28.805Z"
+      },
+      {
+        "direction": "inbound",
+        "body": "My full name is Ryan Swenson",
+        "timestamp": "2026-06-07T15:56:57.072Z"
+      },
+      {
+        "direction": "outbound",
+        "body": "Hi Ryan,\n\nYour appointment is confirmed!\n\nService: consultation\nDate: Tuesday, June 9, 2026\nTime: 11:00 AM\n\nWe look forward to seeing you. If you need to reschedule or have any questions, just reply to this email.\n\nBest,\nThe Scheduling Team",
+        "timestamp": "2026-06-07T15:56:57.831Z"
+      }
+    ],
+    "followUpSent": true,
+    "followUpMessage": "Hello Ms. Swenson,\n\nThank you for reaching out to us! We’d be happy to assist you with scheduling your consultation. Could you please provide your full first name? Once we have that, we can get you booked.\n\nLooking forward to hearing from you!\n\nBest,  \nThe Scheduling Team"
+  },
+  {
+    "id": "002314b1-085c-4a47-836e-d2455769e661",
+    "patientName": "Mike",
+    "service": "to",
+    "email": "demo@example.com",
+    "notes": "Appointment Request\n\nHi I need an appointment. My name is Mike and I want to come in sometime next week.",
+    "status": "NeedsInfo",
+    "createdAt": "2026-06-07T15:53:11.164Z",
+    "emailHistory": [
+      {
+        "direction": "inbound",
+        "body": "Appointment Request\n\nHi I need an appointment. My name is Mike and I want to come in sometime next week.",
+        "timestamp": "2026-06-07T15:53:11.164Z"
+      },
+      {
+        "direction": "outbound",
+        "body": "Hi Mike,\n\nThank you for reaching out! We’d love to help you schedule your appointment. Could you please provide us with your full first and last name, your preferred appointment date, and your preferred appointment time? \n\nLooking forward to hearing from you soon!\n\nBest,  \nThe Scheduling Team",
+        "timestamp": "2026-06-07T15:53:12.392Z"
+      }
+    ],
+    "followUpSent": true,
+    "followUpMessage": "Hi Mike,\n\nThank you for reaching out! We’d love to help you schedule your appointment. Could you please provide us with your full first and last name, your preferred appointment date, and your preferred appointment time? \n\nLooking forward to hearing from you soon!\n\nBest,  \nThe Scheduling Team"
+  },
+  {
+    "id": "ebda104f-6b6f-413d-a1f6-d756fdf50a4b",
+    "patientName": "Sarah Johnson",
+    "service": "cleaning",
+    "appointmentDate": "2026-06-25",
+    "appointmentTime": "14:00",
+    "email": "sarah@example.com",
+    "phone": "612-555-1234",
+    "notes": "Appointment Request\n\nHi, my name is Sarah Johnson and I need a teeth cleaning. Available June 25th at 2pm. Email: sarah@example.com, phone: 612-555-1234",
+    "status": "Confirmed",
+    "createdAt": "2026-06-07T15:53:10.447Z",
+    "emailHistory": [
+      {
+        "direction": "inbound",
+        "body": "Appointment Request\n\nHi, my name is Sarah Johnson and I need a teeth cleaning. Available June 25th at 2pm. Email: sarah@example.com, phone: 612-555-1234",
+        "timestamp": "2026-06-07T15:53:10.447Z"
+      },
+      {
+        "direction": "outbound",
+        "body": "Hi Sarah,\n\nYour appointment is confirmed!\n\nService: cleaning\nDate: Thursday, June 25, 2026\nTime: 2:00 PM\n\nWe look forward to seeing you. If you need to reschedule or have any questions, just reply to this email.\n\nBest,\nThe Scheduling Team",
+        "timestamp": "2026-06-07T15:53:10.450Z"
+      }
+    ]
+  }
+]
