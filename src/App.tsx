@@ -260,7 +260,7 @@ function App() {
   const [showSimulate, setShowSimulate] = useState(false);
   const [simulateText, setSimulateText] = useState(DEMO_EMAIL);
   const [simulating, setSimulating] = useState(false);
-  const [simulateSuccess, setSimulateSuccess] = useState(false);
+  const [simulateResult, setSimulateResult] = useState<'Confirmed' | 'NeedsInfo' | null>(null);
   const [expandedFollowUp, setExpandedFollowUp] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'attention' | 'confirmed'>('attention');
   const [resetting, setResetting] = useState(false);
@@ -321,7 +321,7 @@ function App() {
 
   async function simulateEmail() {
     setSimulating(true);
-    setSimulateSuccess(false);
+    setSimulateResult(null);
     setError(null);
     try {
       const response = await fetch('/api/demo-email', {
@@ -330,8 +330,10 @@ function App() {
         body: JSON.stringify({ text: simulateText, subject: 'Appointment Request' }),
       });
       if (!response.ok) throw new Error('Failed to simulate email');
+      const data = (await response.json()) as { appointment: Appointment };
       await fetchAppointments();
-      setSimulateSuccess(true);
+      setSimulateResult(data.appointment.status === 'Confirmed' ? 'Confirmed' : 'NeedsInfo');
+      setActiveTab(data.appointment.status === 'Confirmed' ? 'confirmed' : 'attention');
       setShowSimulate(false);
       setSimulateText(DEMO_EMAIL);
     } catch (err) {
@@ -346,7 +348,7 @@ function App() {
     try {
       await fetch('/api/reset', { method: 'POST' });
       await fetchAppointments();
-      setSimulateSuccess(false);
+      setSimulateResult(null);
       setError(null);
       setExpandedFollowUp(null);
     } finally {
@@ -378,7 +380,7 @@ function App() {
           </button>
           <button
             className="button button-demo"
-            onClick={() => { setShowSimulate(s => !s); setSimulateSuccess(false); }}>
+            onClick={() => { setShowSimulate(s => !s); setSimulateResult(null); }}>
             {showSimulate ? 'Cancel' : '+ Simulate Email'}
           </button>
         </div>
@@ -387,10 +389,16 @@ function App() {
       <div className="main-grid">
         <section className="left-col">
           {error && <div className="error-box">{error}</div>}
-          {simulateSuccess && (
+          {simulateResult === 'Confirmed' && (
             <div className="success-box">
-              Email parsed — appointment added.
-              <button className="success-dismiss" onClick={() => setSimulateSuccess(false)}>✕</button>
+              Appointment confirmed and added to the schedule.
+              <button className="success-dismiss" onClick={() => setSimulateResult(null)}>✕</button>
+            </div>
+          )}
+          {simulateResult === 'NeedsInfo' && (
+            <div className="needs-info-box">
+              Added to Needs Attention — missing information required before confirming.
+              <button className="success-dismiss" onClick={() => setSimulateResult(null)}>✕</button>
             </div>
           )}
 
