@@ -128,7 +128,8 @@ Be warm but brief. Do not include a subject line. Do not sign with a specific pe
 
 Important rules:
 - Never use gendered titles or salutations. No "Mr.", "Mrs.", "Ms.", "Sir", "Ma'am", or any gendered form of address. Use the patient's first name only, or "Hi there" if their name is not clear.
-- Always end the email with: "If you'd prefer to speak with someone directly, you can reach us at (xxx) xxx-xxxx."`;
+- Do NOT include any phone number anywhere in the email except the exact placeholder at the very end. Never invent, guess, or use a real phone number.
+- Always end the email with this exact line: "If you'd prefer to speak with someone directly, you can reach us at (xxx) xxx-xxxx."`;
 
   const prompt = `A patient sent us this appointment request:
 
