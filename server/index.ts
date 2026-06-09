@@ -2,6 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import crypto from 'crypto';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { parseAppointment } from './parser.js';
 import { generateFollowUp } from './llm.js';
 import { sendMailgunEmail } from './mailgun.js';
@@ -326,6 +328,13 @@ app.post('/api/demo-email', async (req, res) => {
   await sendConfirmationIfConfigured(appointment);
   res.status(201).json({ appointment });
 });
+
+if (process.env.NODE_ENV === 'production') {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  const distPath = path.join(__dirname, '..', 'dist');
+  app.use(express.static(distPath));
+  app.get('*', (_req, res) => res.sendFile(path.join(distPath, 'index.html')));
+}
 
 app.listen(port, () => {
   console.log(`Backend listening on http://localhost:${port}`);
