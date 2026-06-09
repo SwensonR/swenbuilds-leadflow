@@ -296,6 +296,7 @@ function App() {
       }
       const data = (await response.json()) as { appointment: Appointment };
       setAppointments(cur => cur.map(a => a.id === id ? data.appointment : a));
+      setSimulateResult('Confirmed');
     } catch (err) {
       setError((err as Error).message ?? 'Failed to confirm');
     } finally {
@@ -314,6 +315,7 @@ function App() {
       if (!response.ok) throw new Error('Failed to send reply');
       const data = (await response.json()) as { appointment: Appointment };
       setAppointments(cur => cur.map(a => a.id === id ? data.appointment : a));
+      if (data.appointment.status === 'Confirmed') setSimulateResult('Confirmed');
     } catch (err) {
       setError((err as Error).message ?? 'Failed to send reply');
     }
