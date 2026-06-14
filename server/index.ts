@@ -297,8 +297,101 @@ app.post('/api/appointments/:id/reply', async (req, res) => {
   res.json({ appointment: final });
 });
 
+function nextWeekDateStr(dayOfWeek: number): string {
+  // dayOfWeek: 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri
+  const today = new Date();
+  const dow = today.getDay();
+  const daysToThisMonday = dow === 0 ? -6 : 1 - dow;
+  const nextMonday = new Date(today);
+  nextMonday.setDate(today.getDate() + daysToThisMonday + 7);
+  const target = new Date(nextMonday);
+  target.setDate(nextMonday.getDate() + (dayOfWeek - 1));
+  const y = target.getFullYear();
+  const m = String(target.getMonth() + 1).padStart(2, '0');
+  const d = String(target.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function buildSeedData(): Appointment[] {
+  const now = new Date().toISOString();
+  const tueDt = nextWeekDateStr(2);
+  const wedDt = nextWeekDateStr(3);
+  const thuDt = nextWeekDateStr(4);
+
+  const fmtDate = (dt: string) =>
+    new Date(dt + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+
+  return [
+    {
+      id: 'seed-1',
+      patientName: 'Sarah',
+      service: 'Teeth Cleaning',
+      appointmentDate: tueDt,
+      appointmentTime: '14:00',
+      email: 'sarah.m@gmail.com',
+      phone: '(555) 204-1837',
+      status: 'NeedsInfo',
+      followUpSent: true,
+      createdAt: now,
+      emailHistory: [
+        {
+          direction: 'inbound',
+          body: "Hi, I'd like to schedule a teeth cleaning. I'm available next Tuesday at 2pm. My email is sarah.m@gmail.com and phone is (555) 204-1837. Thanks, Sarah",
+          timestamp: now,
+        },
+        {
+          direction: 'outbound',
+          body: "Hi Sarah,\n\nThanks for reaching out! We'd love to get your cleaning scheduled.\n\nTo confirm your appointment, could you please provide your full name (first and last)?\n\nLooking forward to hearing from you!\n\nBest,\nThe Scheduling Team",
+          timestamp: now,
+        },
+      ],
+    },
+    {
+      id: 'seed-2',
+      patientName: 'Marcus Webb',
+      service: 'Crown Replacement',
+      appointmentDate: wedDt,
+      appointmentTime: '10:00',
+      email: 'marcus.webb@gmail.com',
+      phone: '(555) 391-7204',
+      status: 'Requested',
+      createdAt: now,
+      emailHistory: [
+        {
+          direction: 'inbound',
+          body: "Hello, I need to schedule a crown replacement — I have a broken tooth that needs attention. I can come in Wednesday at 10am. My name is Marcus Webb, email marcus.webb@gmail.com, phone (555) 391-7204. Thank you.",
+          timestamp: now,
+        },
+      ],
+    },
+    {
+      id: 'seed-3',
+      patientName: 'Jennifer Torres',
+      service: 'Routine Cleaning',
+      appointmentDate: thuDt,
+      appointmentTime: '09:00',
+      email: 'j.torres@outlook.com',
+      phone: '(555) 712-0493',
+      status: 'Confirmed',
+      createdAt: now,
+      emailHistory: [
+        {
+          direction: 'inbound',
+          body: "Hi there! I'd like to book a routine cleaning. Thursday at 9am works great for me. I'm Jennifer Torres, email j.torres@outlook.com, phone (555) 712-0493. See you then!",
+          timestamp: now,
+        },
+        {
+          direction: 'outbound',
+          body: `Hi Jennifer,\n\nYour appointment is confirmed!\n\nService: Routine Cleaning\nDate: ${fmtDate(thuDt)}\nTime: 9:00 AM\n\nWe look forward to seeing you. If you need to reschedule or have any questions, just reply to this email.\n\nBest,\nThe Scheduling Team`,
+          timestamp: now,
+        },
+      ],
+    },
+  ];
+}
+
 app.post('/api/reset', async (_req, res) => {
-  await saveAppointments([]);
+  await saveAppointments(buildSeedData());
   res.json({ ok: true });
 });
 

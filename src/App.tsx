@@ -265,15 +265,20 @@ function App() {
   const [activeTab, setActiveTab] = useState<'attention' | 'confirmed'>('attention');
   const [resetting, setResetting] = useState(false);
 
-  useEffect(() => { fetchAppointments(); }, []);
+  useEffect(() => { fetchAppointments(true); }, []);
 
-  async function fetchAppointments() {
+  async function fetchAppointments(seedIfEmpty = false) {
     setLoading(true);
     setError(null);
     try {
       const response = await fetch('/api/appointments');
       if (!response.ok) throw new Error('Unable to load appointments');
-      setAppointments((await response.json()) as Appointment[]);
+      const data = (await response.json()) as Appointment[];
+      if (seedIfEmpty && data.length === 0) {
+        await fetch('/api/reset', { method: 'POST' });
+        return fetchAppointments(false);
+      }
+      setAppointments(data);
     } catch (err) {
       setError((err as Error).message ?? 'Failed to fetch appointments');
     } finally {
@@ -387,6 +392,18 @@ function App() {
           </button>
         </div>
       </header>
+
+      <div className="cta-banner">
+        <span className="cta-text">
+          <strong>This is a live demo</strong> — the AI parses each email in real time. No scripts, no fakes.
+        </span>
+        <a
+          className="cta-link"
+          href="mailto:swen@swenbuilds.com?subject=Demo%20Request%20%E2%80%94%20Dental%20Booking%20AI"
+        >
+          Want this for your practice? →
+        </a>
+      </div>
 
       <div className="main-grid">
         <section className="left-col">
